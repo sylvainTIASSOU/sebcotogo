@@ -7,9 +7,9 @@ import Image from "next/image";
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import {useToast} from "@/components/ui/use-toast";
-import {CustomerModel} from "@/models/UserModel";
-import {Api} from "@/api/Api";
 import { useRouter} from "next/navigation";
+import {UserModel} from "@/models/UserModel";
+import {Api} from "@/app/api/Api";
 
 function generateOTP(): string {
     // Générer un code OTP aléatoire de 4 chiffres
@@ -30,7 +30,7 @@ export default function PasswordRecovery() {
     const {toast} = useToast();
     const [otp, setOtp] = useState("")
     const [email, setemail] = useState("")
-    const [customer, setCustomer] = useState<CustomerModel>()
+    const [customer, setCustomer] = useState<UserModel>()
     const router = useRouter();
     useEffect(() => {
 
@@ -73,9 +73,9 @@ export default function PasswordRecovery() {
         }),
         onSubmit: async (values) => {
             setEmailLoading(true)
-           const resp =  await Api.post({email: values.email}, 'user/emailVerification');
+           const resp =  await Api.create('/api/emailVerification', {email: values.email});
            if(resp.ok) {
-               const data : CustomerModel = await resp.json()
+               const data : UserModel = await resp.json()
                setCustomer(data)
                const newOtp = generateOTP();
                setOtp(newOtp)
@@ -135,8 +135,8 @@ export default function PasswordRecovery() {
         onSubmit: async (values) => {
             setEmailLoading(true)
             if(values.pass1 == values.pass2) {
-                const customerModel = new CustomerModel(Number(customer?.phone), values.pass1, String(customer?.email), String(customer?.firstName), String(customer?.lastName), String(customer?.role))
-                const response = await Api.update(customerModel, `user/update/${String(customer?.id)}`);
+                const customerModel = new UserModel(Number(customer?.phone), values.pass1, String(customer?.email), String(customer?.firstName), String(customer?.lastName), String(customer?.role))
+                const response = await Api.update(`/api/user/${String(customer?.id)}`, customerModel );
                 if(response.ok) {
                     // TODO:: show toast
                     toast({
