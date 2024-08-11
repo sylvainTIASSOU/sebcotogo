@@ -114,7 +114,9 @@ export default function Chart3() {
     }, []);
 
     return (
-        <BarChart
+        <div>
+            {/**
+             *  <BarChart
         
             dataset={data as DatasetType}
             xAxis={[{ scaleType: 'band', dataKey: 'user_lastName' }]}
@@ -122,5 +124,9 @@ export default function Chart3() {
             layout="vertical"
             {...chartSetting}
         />
+             * 
+             */}
+        </div>
+       
     );
 }

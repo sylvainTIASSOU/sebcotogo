@@ -117,12 +117,16 @@ export default function Chart1() {
     }, []);
 
     return (
-        <BarChart
+        <div>
+            {/**
+             <BarChart
             dataset={data as DatasetType}
             yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
             series={[{ dataKey: 'total_order', label: 'Commande total', valueFormatter }]}
             layout="horizontal"
             {...chartSetting}
-        />
+        /> */}
+        </div>
+       
     );
 }

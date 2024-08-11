@@ -32,7 +32,10 @@ export default function Chart2() {
 
 
     return (
-        <LineChart
+        <div>
+            {/**
+             * 
+             *  <LineChart
             xAxis={[{scaleType: 'point', data: axisData }]}
             series={[
                 {
@@ -43,5 +46,8 @@ export default function Chart2() {
             width={500}
             height={300}
         />
+             */}
+        </div>
+       
     );
 }
