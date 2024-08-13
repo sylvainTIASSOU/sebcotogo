@@ -9,11 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "antd";
 import { useToast } from "@/components/ui/use-toast";
 import { CategoryModel } from "@/models/CategoryModel";
-import ImageUpload from "@/app/(amdin)/componnents/image-uploadAdmin";
 import { ArrowLeftCircle, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Api } from "@/app/api/Api";
 import HeadDetaill from "@/app/(amdin)/componnents/HeadDetail";
+import ImageLoader from "@/components/ImagesLoader";
 
 export default function AddCategory() {
     const [loading, setLoading] = useState(false);
@@ -85,7 +85,9 @@ export default function AddCategory() {
                         <label>Image <span className={'text-red-600'}>*</span> </label>
                         <div className={"flex justify-between content-between"}>
                             <div>
-                                <ImageUpload
+                                <ImageLoader url={setImages} initialUrl={images} />
+                               {/**
+                                *  <ImageUpload
                                     value={images}
                                     disable={loading}
                                     onChange={(url: any) => {
@@ -100,6 +102,7 @@ export default function AddCategory() {
                                     }}
 
                                 />
+                                */}
                             </div>
                         </div>
                     </div>

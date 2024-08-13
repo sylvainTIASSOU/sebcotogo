@@ -91,7 +91,7 @@ export default function AddPovider() {
                     <div className={'flex space-x-10 justify-between content-between'}>
                         <div className={'flex flex-col space-y-3'}>
                             <Label
-                                className={formik.touched.phone && formik.errors.phone ? 'text-red-600' : ''}>{formik.touched.phone && formik.errors.phone ? formik.errors.phone : "Nom de l'article"}<span
+                                className={formik.touched.phone && formik.errors.phone ? 'text-red-600' : ''}>{formik.touched.phone && formik.errors.phone ? formik.errors.phone : "Numéro"}<span
                                 className={'text-red-600'}>*</span> </Label>
                             <Input type={'tel'}
                                    name={'phone'}

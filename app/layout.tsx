@@ -4,7 +4,9 @@ import "./globals.css";
 import {Toaster} from "@/components/ui/toaster";
 import {ReduxProvider} from "@/redux/provider";
 import {AntdRegistry} from '@ant-design/nextjs-registry';
-
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const josefin = Josefin_Sans({
     subsets: ["latin"],
@@ -35,14 +37,13 @@ export default function RootLayout({
 
 
         <body className={`${josefin.className} bg-gray-100  overflow-x-hidden hide-scrollbar`}>
-
+        <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
         <ReduxProvider>
             <AntdRegistry>
                 {/*<DevisBtn/>*/}
-
                 {children}
-
-
 
                 <Toaster/>
             </AntdRegistry>

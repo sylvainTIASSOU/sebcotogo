@@ -12,6 +12,7 @@ import ImageUpload from "@/app/(amdin)/componnents/image-uploadAdmin";
 import {Methodes} from "@/resource_methodes/methodes";
 import HeadDetaill from "@/app/(amdin)/componnents/HeadDetail";
 import {Api} from "@/app/api/Api";
+import ImageLoader from "@/components/ImagesLoader";
 
 let ImagesArray: string[] = [];
 
@@ -95,7 +96,9 @@ export default function EditCategory({ params }: { params: { id: string } }) {
                         <div className={"flex justify-between content-between"}>
 
                                     <div >
-                                        <ImageUpload
+                                    <ImageLoader url={setImages} initialUrl={images} />
+                                        {/**
+                                         *   <ImageUpload
                                             value={images}
                                             disable={loading}
                                             onChange={ async (url: any) => {
@@ -113,6 +116,9 @@ export default function EditCategory({ params }: { params: { id: string } }) {
                                             }}
 
                                         />
+                                         * 
+                                         */}
+                                      
                                     </div>
 
 
@@ -148,7 +154,7 @@ export default function EditCategory({ params }: { params: { id: string } }) {
                     <div className={"flex space-x-5 relative top-14"}>
                         <Button htmlType={"button"} type={'dashed'} onClick={() => resetForm(formik.values)}
                             size={'large'} className={'w-auto '}>Effacer</Button>
-                        <Button htmlType={"submit"} size={'large'} loading={loading} className={'w-auto '}>Ajouter</Button>
+                        <Button htmlType={"submit"} size={'large'} loading={loading} className={'w-auto bg-black '}>Edit</Button>
                     </div>
                 </form>
             </section>

@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {DropdownMenuGroup, DropdownMenuItem} from "@/components/ui/dropdown-menu";
 import {useRouter} from "next/navigation";
-
+import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import {DropdownMenuDemoAdmin} from "@/app/(amdin)/componnents/DropDwonMenuAdmin";
@@ -65,7 +65,7 @@ export default  function Categories() {
 
                                             if (confirmation) {
                                                 const categoryModel = new CategoryModel(items.name, items.imageUrl, items.description, items.id, false, false);
-                                                const resp = await Api.update("/api/category", categoryModel);
+                                                const resp = await Api.update(`/api/category/${items.id}`, categoryModel);
 
                                                 if (resp.ok){
                                                     toast({
@@ -85,7 +85,7 @@ export default  function Categories() {
                                         }}
                                 
                                 >
-                                    Desactivé
+                                    Suprimé
                                 </Button>
                             </DropdownMenuItem>
 

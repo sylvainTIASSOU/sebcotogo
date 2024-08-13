@@ -7,19 +7,18 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import type {SelectProps} from 'antd';
 import {Button, Select} from 'antd';
-import {Methodes} from "@/resource_methodes/methodes";
 import {useToast} from "@/components/ui/use-toast";
 import {CategoryModel} from "@/models/CategoryModel";
 import {CharacteristicModel} from "@/models/characteristicModel";
 import {ArticleModel} from "@/models/ArticleModel";
 import {CharacteristicArticleModel} from "@/models/CharacteristicArticle";
-import ImageUpload from "@/app/(amdin)/componnents/image-uploadAdmin";
 import {Api} from "@/app/api/Api";
 import HeadDetaill from "@/app/(amdin)/componnents/HeadDetail";
 import {ProviderModel} from "@/models/ProviderModel";
 import {StockModel} from "@/models/StockModel";
 import {StockArticleModel} from "@/models/StockArticleModel";
-
+import Image from "next/image";
+import {UploadButton} from "@/lib/uploadthing";
 let ImagesArray: string[] = [];
 let characteristicVal: string[] = [];
 
@@ -254,99 +253,112 @@ const EditArticle = ({params}: {params: {id: string}}) => {
             <section>
                 <form onSubmit={formik.handleSubmit} className={'flex flex-col space-y-10 w-[950px]'}>
                     {/*image*/}
+                    {/*image*/}
                     <div>
                         <Label>Image <span className={'text-red-600'}>*</span> </Label>
                         <div className={"grid grid-cols-1 md:grid-cols-4 gap-4"}>
-
                             <div>
-                                <ImageUpload
-                                    value={images}
-                                    disable={loading}
-                                    onChange={(url) => {
-                                        if (url != "") {
-                                            setImages(url);
-                                            ImagesArray.push(url)
-                                            console.log(ImagesArray)
-                                        }
-                                    }}
-                                    onRemove={() => {
-                                        const index = ImagesArray.indexOf(images);
-                                        if (index !== -1) {
-                                            ImagesArray.splice(index, 1);
-                                        }
-                                        setImages("");
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <ImageUpload
-                                    value={images2}
-                                    disable={loading}
-                                    onChange={(url) => {
-                                        if (url != "") {
-                                            setImages2(url);
-                                            ImagesArray.push(url)
-                                            console.log(ImagesArray)
-                                        }
-                                    }}
-                                    onRemove={() => {
-                                        setImages2("");
-                                        const index = ImagesArray.indexOf(images2);
-                                        if (index !== -1) {
-                                            ImagesArray.splice(index, 1);
-                                        }
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <ImageUpload
-                                    value={images3}
-                                    disable={loading}
-                                    onChange={(url) => {
-                                        if (url != "") {
-                                            setImages3(url);
-                                            ImagesArray.push(url)
-                                            console.log(ImagesArray)
-                                        }
-                                    }}
-                                    onRemove={() => {
-                                        setImages3("");
-                                        const index = ImagesArray.indexOf(images3);
-                                        if (index !== -1) {
-                                            ImagesArray.splice(index, 1);
-                                        }
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <ImageUpload
-                                    value={images4}
-                                    disable={loading}
-                                    onChange={(url) => {
+                                <div
+                                    className={`w-[250px] h-[200px] overflow-hidden relative items-center justify-center content-center rounded-2xl border-2`}>
 
+                                    {
+                                        images && <Image src={images} alt="Uploaded Image" layout={'fill'} fill
+                                                         className="objet-cover bg-center bg-cover "/>
+                                    }
 
-                                        if (url != "") {
-                                            ImagesArray.push(url)
-                                            setImages4(url);
-                                            console.log(ImagesArray)
-                                        }
-
-                                    }}
-                                    onRemove={() => {
-                                        setImages4("");
-                                        const index = ImagesArray.indexOf(images4);
-                                        if (index !== -1) {
-                                            ImagesArray.splice(index, 1);
-                                        }
-                                        console.log(ImagesArray)
-                                    }}
-
-                                />
+                                    <UploadButton
+                                        className="w-full p-3 relative"
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res: any[]) => {
+                                            // Do something with the response
+                                            ImagesArray.push(res[0].url)
+                                            setImages(res[0].url);
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            // Do something with the error.
+                                            alert(`ERROR! ${error.message}`);
+                                        }}
+                                    />
+                                </div>
                             </div>
 
+
+                            <div>
+                                <div
+                                    className={`w-[250px] h-[200px] overflow-hidden relative items-center justify-center content-center rounded-2xl border-2`}>
+
+                                    {
+                                        images2 && <Image src={images2} alt="Uploaded Image" layout={'fill'} fill
+                                                          className="objet-cover bg-center bg-cover "/>
+                                    }
+
+                                    <UploadButton
+                                        className="w-full p-3 relative"
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res: any[]) => {
+                                            // Do something with the response
+                                            ImagesArray.push(res[0].url)
+                                            setImages2(res[0].url);
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            // Do something with the error.
+                                            alert(`ERROR! ${error.message}`);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div
+                                    className={`w-[250px] h-[200px] overflow-hidden relative items-center justify-center content-center rounded-2xl border-2`}>
+
+                                    {
+                                        images3 && <Image src={images3} alt="Uploaded Image" layout={'fill'} fill
+                                                          className="objet-cover bg-center bg-cover "/>
+                                    }
+
+                                    <UploadButton
+                                        className="w-full p-3 relative"
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res: any[]) => {
+                                            // Do something with the response
+                                            ImagesArray.push(res[0].url)
+                                            setImages3(res[0].url);
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            // Do something with the error.
+                                            alert(`ERROR! ${error.message}`);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <div
+                                    className={`w-[250px] h-[200px] overflow-hidden relative items-center justify-center content-center rounded-2xl border-2`}>
+
+                                    {
+                                        images4 && <Image src={images4} alt="Uploaded Image" layout={'fill'} fill
+                                                          className="objet-cover bg-center bg-cover "/>
+                                    }
+
+                                    <UploadButton
+                                        className="w-full p-3 relative"
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res: any[]) => {
+                                            // Do something with the response
+                                            ImagesArray.push(res[0].url)
+                                            setImages4(res[0].url);
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            // Do something with the error.
+                                            alert(`ERROR! ${error.message}`);
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
-
-
                     </div>
 
                     {/*first input row*/}

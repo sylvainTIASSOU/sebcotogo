@@ -1,28 +1,19 @@
 "use client"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+import { useState } from 'react'
+import ImageLoader from "@/components/ImagesLoader";
+import Image from "next/image";
+
 const Test = () => {
+    const [imageUrl, setImageUrl] = useState<string>('');
 
 
     return (
-        <div className={'flex '}>
-            <Tabs activationMode={"manual"} defaultValue="account" className="w-[400px]">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Account</TabsTrigger>
-                    <TabsTrigger value="password">Password</TabsTrigger>
-                </TabsList>
-                <TabsContent value="account">
-                    valuer acount
-                </TabsContent>
-                <TabsContent value="password">
-                   value password
-                </TabsContent>
-            </Tabs>
+        <div className={'flex items-center justify-center'}>
+             <ImageLoader url={setImageUrl} initialUrl={imageUrl} />
 
+             {imageUrl && (
+                <Image src={imageUrl} alt="Uploaded Image" width={150} height={150} />
+            )}
         </div>
     );
 }
