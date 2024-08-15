@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,11 +19,11 @@ model Delivery {
   longitude      String?
   latitude       String?
   userId         Int
-  user           User     @relation(fields: [userId], references: [id])
   isVisible      Boolean  @default(true)
   isActived      Boolean  @default(true)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id])
   order          Order[]
 }
 
@@ -40,11 +34,11 @@ model Order {
   payement     PayStatus
   amount       Int
   deliveryId   Int
-  delivery     Delivery       @relation(fields: [deliveryId], references: [id])
   isVisible    Boolean        @default(true)
   isActived    Boolean        @default(true)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  delivery     Delivery       @relation(fields: [deliveryId], references: [id])
   orderArticle OrderArticle[]
 }
 
@@ -54,10 +48,10 @@ model OrderArticle {
   price     Int
   productId Int
   orderId   Int
-  product   Product  @relation(fields: [productId], references: [id])
-  order     Order    @relation(fields: [orderId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Comment {
@@ -65,26 +59,11 @@ model Comment {
   content   String
   date      String
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
   isVisible Boolean  @default(true)
   isActived Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum PayStatus {
-  PAY
-  NOTPAY
-}
-
-enum OrderStatus {
-  NEW
-  DELIVRED
-  INDELIVERED
-  GOING
-  CANCEL
-  INSTOCK
-  FAILD
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model User {
@@ -99,12 +78,10 @@ model User {
   isActived Boolean    @default(true)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  delivery  Delivery[]
   comment   Comment[]
+  delivery  Delivery[]
 }
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:654803093.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:3182764185.
 model ProductCategory {
   id          Int       @id @default(autoincrement())
   name        String
@@ -136,13 +113,13 @@ model Product {
   price             Float
   tax               Float?
   categoryId        Int
-  ProductCategories ProductCategory         @relation(fields: [categoryId], references: [id])
   isVisible         Boolean                 @default(true)
   isActived         Boolean                 @default(true)
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
-  characteristic    ProductCharacteristic[]
   orderArticle      OrderArticle[]
+  ProductCategories ProductCategory         @relation(fields: [categoryId], references: [id])
+  characteristic    ProductCharacteristic[]
   PromotionArticle  PromotionArticle[]
   StockArticle      StockArticle[]
 }
@@ -151,8 +128,8 @@ model ProductCharacteristic {
   id               Int            @id @default(autoincrement())
   productId        Int
   characteristicId Int
-  Product          Product        @relation(fields: [productId], references: [id])
   Characteristic   Characteristic @relation(fields: [characteristicId], references: [id])
+  Product          Product        @relation(fields: [productId], references: [id])
 }
 
 model Promotion {
@@ -173,8 +150,8 @@ model PromotionArticle {
   oldPrice    Int
   promotionId Int
   productId   Int
-  promotion   Promotion @relation(fields: [promotionId], references: [id])
   product     Product   @relation(fields: [productId], references: [id])
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
 }
 
 model Provider {
@@ -190,31 +167,45 @@ model Provider {
   stock     Stock[]
 }
 
-enum Providertype {
-  PROVIDER
-  DELIVER
-}
-
 model Stock {
-  id Int @id @default(autoincrement())
-
+  id           Int            @id @default(autoincrement())
   providerId   Int
-  provider     Provider       @relation(fields: [providerId], references: [id])
   isVisible    Boolean        @default(true)
   isActived    Boolean        @default(true)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  provider     Provider       @relation(fields: [providerId], references: [id])
   StockArticle StockArticle[]
 }
 
 model StockArticle {
   id         Int     @id @default(autoincrement())
   quantity   Int
-  stockPrice Int
   productId  Int
   stockId    Int
+  stockPrice Int
   product    Product @relation(fields: [productId], references: [id])
   stock      Stock   @relation(fields: [stockId], references: [id])
+}
+
+enum PayStatus {
+  PAY
+  NOTPAY
+}
+
+enum OrderStatus {
+  NEW
+  DELIVRED
+  INDELIVERED
+  GOING
+  CANCEL
+  INSTOCK
+  FAILD
+}
+
+enum Providertype {
+  PROVIDER
+  DELIVER
 }
 
 enum RoleType {
